@@ -1,2 +1,4 @@
+-- Ejecutar en Supabase SQL Editor
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
--- Create DB manually and run Alembic migrations afterwards.
+
+-- Aquí puedes agregar índices/seed SQL inicial si lo deseas.

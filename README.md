@@ -1,14 +1,21 @@
 # Proyecto E-commerce (Next.js + FastAPI)
 
-E-commerce full-stack con frontend en **Next.js 14 + TypeScript + Tailwind + Zustand** y backend en **FastAPI + SQLAlchemy + PostgreSQL + JWT**, incluyendo base para Mercado Pago, reviews, órdenes y panel admin.
+E-commerce full-stack con frontend en **Next.js 14 + TypeScript + Tailwind + Zustand** y backend en **FastAPI + SQLAlchemy + Supabase Postgres + JWT**, incluyendo base para Mercado Pago, reviews, órdenes y panel admin.
 
 ## Requisitos previos
 - Node.js 20+
 - Python 3.14+
-- PostgreSQL 14+
+- Cuenta de Supabase (proyecto creado)
 
 ## Instalación
-### Backend
+### 1) Configurar Supabase
+1. Crear proyecto en Supabase.
+2. Ir a **Project Settings > Database** y copiar la cadena de conexión del pooler.
+3. Reemplazar `DATABASE_URL` en `backend/.env` con formato SQLAlchemy + psycopg:
+   `postgresql+psycopg://...`
+4. (Opcional) Cargar `docs/init.sql` en el SQL Editor de Supabase.
+
+### 2) Backend
 ```bash
 cd backend
 python -m venv .venv && source .venv/bin/activate
@@ -17,7 +24,7 @@ cp .env.example .env
 uvicorn app.main:app --reload --port 8000
 ```
 
-### Frontend
+### 3) Frontend
 ```bash
 cd frontend
 cp .env.local.example .env.local
@@ -35,7 +42,7 @@ npm run dev
 - `docs/`: SQL inicial y colección Postman.
 
 ## Scripts útiles
-- Seed data: `cd backend && python -m app.scripts.seed` (o `python scripts/seed.py`)
+- Seed data: `cd backend && python scripts/seed.py`
 - Tests backend: `cd backend && pytest`
 
 ## Mercado Pago (guía rápida)
@@ -43,6 +50,9 @@ npm run dev
 2. Copiar `ACCESS_TOKEN` y `PUBLIC_KEY` en `.env` y `.env.local`.
 3. Configurar webhook a `POST /api/webhooks/mercadopago`.
 4. Probar en sandbox con credenciales de prueba.
+
+## Docker Compose
+`docker-compose.yml` levanta **frontend + backend**. La base de datos se toma desde Supabase vía `DATABASE_URL`.
 
 ## Entregables incluidos
 - Código frontend y backend.
