@@ -4,7 +4,7 @@ E-commerce full-stack con frontend en **Next.js 14 + TypeScript + Tailwind + Zus
 
 ## Requisitos previos
 - Node.js 20+
-- Python 3.11+
+- Python 3.14+
 - PostgreSQL 14+
 
 ## Instalación
