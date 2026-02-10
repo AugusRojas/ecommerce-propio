@@ -8,7 +8,6 @@ from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi.extension import _rate_limit_exceeded_handler
 from app.config import settings
-from app.database import Base, engine
 from app.routes import auth, products, orders, reviews, webhooks, categories, cart
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
@@ -27,7 +26,6 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-Base.metadata.create_all(bind=engine)
 
 @app.middleware('http')
 async def add_cache_headers(request: Request, call_next):

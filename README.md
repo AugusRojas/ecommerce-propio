@@ -11,9 +11,10 @@ E-commerce full-stack con frontend en **Next.js 14 + TypeScript + Tailwind + Zus
 ### 1) Configurar Supabase
 1. Crear proyecto en Supabase.
 2. Ir a **Project Settings > Database** y copiar la cadena de conexión del pooler.
-3. Reemplazar `DATABASE_URL` en `backend/.env` con formato SQLAlchemy + psycopg:
-   `postgresql+psycopg://...`
-4. (Opcional) Cargar `docs/init.sql` en el SQL Editor de Supabase.
+3. Configurar `DATABASE_URL` en `backend/.env` con la URL del pooler:
+   - `DATABASE_URL=postgresql+psycopg://...?...sslmode=require`
+4. Mantener `DB_USE_NULL_POOL=true` (evita doble pooling cliente + pooler).
+5. (Opcional) Cargar `docs/init.sql` en el SQL Editor de Supabase.
 
 ### 2) Backend
 ```bash
@@ -52,7 +53,7 @@ npm run dev
 4. Probar en sandbox con credenciales de prueba.
 
 ## Docker Compose
-`docker-compose.yml` levanta **frontend + backend**. La base de datos se toma desde Supabase vía `DATABASE_URL`.
+`docker-compose.yml` levanta **frontend + backend**. La base de datos es exclusivamente Supabase web vía `DATABASE_URL` (no hay fallback local).
 
 ## Entregables incluidos
 - Código frontend y backend.
@@ -61,3 +62,7 @@ npm run dev
 - Seed data: `backend/scripts/seed.py`.
 - Collection Postman: `docs/postman_collection.json`.
 - Docker Compose del stack completo: `docker-compose.yml`.
+
+
+## Nota sobre SQLAlchemy + Supabase
+Si estabas usando `postgresql+psycopg2://...`, cámbialo a `postgresql+psycopg://...` para compatibilidad con este proyecto y Python 3.14.
