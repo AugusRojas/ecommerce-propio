@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models import Order
 from app.services.order_service import mark_order_paid
 
 router = APIRouter(tags=['payments'])
@@ -21,18 +20,12 @@ def webhook(payload: dict, db: Session = Depends(get_db)):
     if not order_id:
         raise HTTPException(status_code=400, detail='order_id requerido')
 
-    order = db.query(Order).filter(Order.id == order_id).first()
-    if not order:
-        raise HTTPException(status_code=404, detail='Orden no encontrada')
-
     status = payload.get('status', '').lower()
     if status == 'approved':
-        updated = mark_order_paid(db, order, payload.get('payment_id', ''), status)
+        updated = mark_order_paid(db, order_id, payload.get('payment_id', ''), status)
         return {'received': True, 'order_id': str(updated.id), 'status': updated.status}
 
-    order.mercadopago_status = status or 'unknown'
-    db.commit()
-    return {'received': True, 'order_id': str(order.id), 'status': order.status}
+    return {'received': True, 'order_id': str(order_id), 'status': 'pending'}
 
 
 @router.get('/api/admin/stats')
