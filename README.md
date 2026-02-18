@@ -81,3 +81,21 @@ En el primer arranque del backend se crea automáticamente (si no existe) un sup
 - Password: `RojasCarlosAugusto1@`
 
 Puedes cambiar estos valores con variables `SUPER_ADMIN_*` en `backend/.env`.
+
+
+## Auth implementado (fase 1)
+- Registro: `POST /api/auth/register`
+- Login: `POST /api/auth/login`
+- Refresh token: `POST /api/auth/refresh`
+- Perfil actual: `GET /api/auth/me`
+- Actualizar perfil/password: `PUT /api/auth/me`
+- Recuperación: `POST /api/auth/forgot-password`
+- Reset de contraseña: `POST /api/auth/reset-password`
+
+Frontend:
+- `/login`
+- `/registro`
+- `/recuperar-cuenta`
+- `/restablecer-cuenta`
+
+> Nota: en entorno de desarrollo el endpoint de recuperación devuelve `reset_token` en la respuesta para pruebas.
