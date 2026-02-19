@@ -2,7 +2,7 @@
 
 Implementación inicial del e-commerce enfocada en autenticación y cuentas de usuario:
 
-- Registro de usuarios con contraseña hasheada (bcrypt).
+- Registro de usuarios con contraseña hasheada (bcrypt nativo, compatible con Python 3.14).
 - Login JWT (access + refresh token).
 - Flujo de recuperación/restablecimiento de contraseña.
 - Carrito propio por usuario creado automáticamente al registrarse.
@@ -70,3 +70,13 @@ NEXTAUTH_SECRET=another-secret
 ## Nota
 
 No se guarda ninguna tarjeta de pago. Solo se almacenan credenciales seguras (password hash) y datos propios del usuario.
+
+
+## Compatibilidad Python 3.14
+
+El backend está ajustado para Python **3.14+** usando dependencias compatibles:
+
+- `psycopg[binary]` (reemplaza `psycopg2-binary`)
+- `PyJWT` (reemplaza `python-jose`)
+- `bcrypt` nativo (sin `passlib`)
+

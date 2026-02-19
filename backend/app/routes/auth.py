@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from jose import JWTError
+from jwt import InvalidTokenError
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -52,7 +52,7 @@ def login(payload: UserLogin, db: Session = Depends(get_db)):
 def refresh_token(payload: RefreshTokenRequest, db: Session = Depends(get_db)):
     try:
         decoded = decode_token(payload.refresh_token)
-    except JWTError as exc:
+    except InvalidTokenError as exc:
         raise HTTPException(status_code=401, detail="Refresh token inválido") from exc
 
     if decoded.get("type") != "refresh":
@@ -91,7 +91,7 @@ def forgot_password(payload: ForgotPasswordRequest, db: Session = Depends(get_db
 def reset_password(payload: ResetPasswordRequest, db: Session = Depends(get_db)):
     try:
         decoded = decode_token(payload.token)
-    except JWTError as exc:
+    except InvalidTokenError as exc:
         raise HTTPException(status_code=401, detail="Token inválido") from exc
 
     if decoded.get("type") != "reset":
